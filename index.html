@@ -227,8 +227,28 @@ section.alt .aside-box{ background:var(--navy); }
 .chips{ display:flex; flex-wrap:wrap; gap:8px; }
 .chip{ font-family:var(--mono); font-size:11.5px; padding:7px 12px;
   border:1px solid var(--line-2); color:var(--text-read); background:var(--navy);
-  transition:border-color .2s, color .2s; }
+  transition:border-color .2s, color .2s, background .2s; }
 .chip:hover{ border-color:var(--azure); color:var(--azure-2); }
+button.chip{ cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+button.chip em{ font-style:normal; font-size:10px; color:var(--gold); }
+button.chip[aria-pressed="true"]{ background:var(--azure); border-color:var(--azure);
+  color:#06101C; font-weight:500; }
+button.chip[aria-pressed="true"] em{ color:#06101C; }
+.chip.estatico{ cursor:default; }
+.chip.estatico:hover{ border-color:var(--line-2); color:var(--text-read); }
+
+/* aviso de filtro ativo */
+.filtro-aviso{ display:none; align-items:center; justify-content:space-between; gap:16px;
+  margin:0 0 20px; padding:12px 16px; background:var(--azure-deep);
+  border-left:3px solid var(--azure); }
+.filtro-aviso.on{ display:flex; }
+.filtro-aviso span{ font-family:var(--mono); font-size:12px; color:var(--text-read); }
+.filtro-aviso b{ color:var(--azure-2); }
+.filtro-aviso button{ font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+  text-transform:uppercase; background:none; border:1px solid var(--line-2);
+  color:var(--text-read); padding:7px 12px; cursor:pointer; transition:.2s; }
+.filtro-aviso button:hover{ border-color:var(--azure); color:var(--azure-2); }
+.setor[hidden], .case[hidden]{ display:none; }
 
 /* painéis */
 .pgrupo{ margin:30px 0 12px; }
@@ -364,31 +384,31 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
       <h3>Áreas da empresa atendidas</h3>
       <p>Os projetos que conduzi atravessaram praticamente toda a estrutura da organização, do fiscal ao jurídico.</p>
       <div class="chips">
-        <span class="chip">Fiscal e tributário</span>
-        <span class="chip">Financeiro e tesouraria</span>
-        <span class="chip">RH e admissão</span>
-        <span class="chip">Operações e campo</span>
-        <span class="chip">Jurídico</span>
-        <span class="chip">Facilities e manutenção</span>
-        <span class="chip">Frotas e equipamentos</span>
-        <span class="chip">Comunicação interna</span>
-        <span class="chip">Atendimento e relacionamento</span>
-        <span class="chip">Dados e BI</span>
-        <span class="chip">Viagens e mobilidade</span>
+        <button type="button" class="chip" data-area="fiscal">Fiscal e tributário<em>01</em></button>
+        <button type="button" class="chip" data-area="financeiro">Financeiro e tesouraria<em>02</em></button>
+        <button type="button" class="chip" data-area="rh">RH e admissão<em>04</em></button>
+        <button type="button" class="chip" data-area="operacoes">Operações e campo<em>03</em></button>
+        <button type="button" class="chip" data-area="frotas">Frotas e equipamentos<em>02</em></button>
+        <button type="button" class="chip" data-area="facilities">Facilities e manutenção<em>02</em></button>
+        <button type="button" class="chip" data-area="juridico">Jurídico<em>01</em></button>
+        <button type="button" class="chip" data-area="atendimento">Atendimento e relacionamento<em>02</em></button>
+        <button type="button" class="chip" data-area="comunicacao">Comunicação interna<em>03</em></button>
+        <button type="button" class="chip" data-area="dados">Dados e BI<em>02</em></button>
+        <button type="button" class="chip" data-area="viagens">Viagens e mobilidade<em>02</em></button>
       </div>
     </div>
     <div class="alcance-bloco">
       <h3>Setores dos clientes implantados</h3>
       <p>Entre os clientes onde implantei sistema, a variedade de contexto vai do chão de fábrica ao ambiente hospitalar.</p>
       <div class="chips">
-        <span class="chip">Indústria e manufatura</span>
-        <span class="chip">Educação</span>
-        <span class="chip">Saúde e hospitalar</span>
-        <span class="chip">Logística e transporte</span>
-        <span class="chip">Varejo e shopping</span>
-        <span class="chip">Condomínios</span>
-        <span class="chip">Automotivo</span>
-        <span class="chip">Serviços corporativos</span>
+        <span class="chip estatico">Indústria e manufatura</span>
+        <span class="chip estatico">Educação</span>
+        <span class="chip estatico">Saúde e hospitalar</span>
+        <span class="chip estatico">Logística e transporte</span>
+        <span class="chip estatico">Varejo e shopping</span>
+        <span class="chip estatico">Condomínios</span>
+        <span class="chip estatico">Automotivo</span>
+        <span class="chip estatico">Serviços corporativos</span>
       </div>
     </div>
   </div>
@@ -401,6 +421,11 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
       <div class="label">01 · Inventário</div>
       <h2>Projetos e implantações</h2>
       <p>Vinte e um sistemas que entraram em produção, organizados por frente. Os marcados como destaque são os de maior escala ou complexidade. Abra qualquer um para ver o desafio, minha atuação e o que ficou de resultado.</p>
+    </div>
+
+    <div class="filtro-aviso" id="filtroAviso">
+      <span>Mostrando projetos de <b id="filtroNome"></b></span>
+      <button type="button" id="filtroLimpar">Ver todos os projetos</button>
     </div>
 
     <div class="indice">
@@ -421,7 +446,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">06</span>
       </header>
       <div class="ledger">
-      <details class="case destaque" data-num="07">
+      <details class="case destaque" data-num="07" data-areas="operacoes">
         <summary>
           <span class="case-num">07</span>
           <span>
@@ -459,7 +484,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="13">
+      <details class="case destaque" data-num="13" data-areas="frotas">
         <summary>
           <span class="case-num">13</span>
           <span>
@@ -492,7 +517,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="05">
+      <details class="case destaque" data-num="05" data-areas="operacoes">
         <summary>
           <span class="case-num">05</span>
           <span>
@@ -524,7 +549,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="12">
+      <details class="case" data-num="12" data-areas="operacoes">
         <summary>
           <span class="case-num">12</span>
           <span>
@@ -556,7 +581,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="14">
+      <details class="case" data-num="14" data-areas="facilities">
         <summary>
           <span class="case-num">14</span>
           <span>
@@ -588,7 +613,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="03">
+      <details class="case" data-num="03" data-areas="frotas">
         <summary>
           <span class="case-num">03</span>
           <span>
@@ -632,7 +657,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">02</span>
       </header>
       <div class="ledger">
-      <details class="case destaque" data-num="02">
+      <details class="case destaque" data-num="02" data-areas="fiscal">
         <summary>
           <span class="case-num">02</span>
           <span>
@@ -664,7 +689,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="01">
+      <details class="case destaque" data-num="01" data-areas="financeiro">
         <summary>
           <span class="case-num">01</span>
           <span>
@@ -707,7 +732,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">02</span>
       </header>
       <div class="ledger">
-      <details class="case destaque" data-num="06">
+      <details class="case destaque" data-num="06" data-areas="dados">
         <summary>
           <span class="case-num">06</span>
           <span>
@@ -739,7 +764,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="08">
+      <details class="case destaque" data-num="08" data-areas="rh dados">
         <summary>
           <span class="case-num">08</span>
           <span>
@@ -783,7 +808,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">02</span>
       </header>
       <div class="ledger">
-      <details class="case destaque" data-num="10">
+      <details class="case destaque" data-num="10" data-areas="financeiro atendimento">
         <summary>
           <span class="case-num">10</span>
           <span>
@@ -816,7 +841,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="09">
+      <details class="case destaque" data-num="09" data-areas="rh atendimento">
         <summary>
           <span class="case-num">09</span>
           <span>
@@ -861,7 +886,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">05</span>
       </header>
       <div class="ledger">
-      <details class="case destaque" data-num="04">
+      <details class="case destaque" data-num="04" data-areas="rh">
         <summary>
           <span class="case-num">04</span>
           <span>
@@ -893,7 +918,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case destaque" data-num="20">
+      <details class="case destaque" data-num="20" data-areas="comunicacao">
         <summary>
           <span class="case-num">20</span>
           <span>
@@ -925,7 +950,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="21">
+      <details class="case" data-num="21" data-areas="rh">
         <summary>
           <span class="case-num">21</span>
           <span>
@@ -957,7 +982,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="11">
+      <details class="case" data-num="11" data-areas="comunicacao">
         <summary>
           <span class="case-num">11</span>
           <span>
@@ -990,7 +1015,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="19">
+      <details class="case" data-num="19" data-areas="comunicacao">
         <summary>
           <span class="case-num">19</span>
           <span>
@@ -1033,7 +1058,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <span class="setor-count">04</span>
       </header>
       <div class="ledger">
-      <details class="case" data-num="17">
+      <details class="case" data-num="17" data-areas="viagens">
         <summary>
           <span class="case-num">17</span>
           <span>
@@ -1065,7 +1090,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="16">
+      <details class="case" data-num="16" data-areas="viagens">
         <summary>
           <span class="case-num">16</span>
           <span>
@@ -1096,7 +1121,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="15">
+      <details class="case" data-num="15" data-areas="juridico">
         <summary>
           <span class="case-num">15</span>
           <span>
@@ -1127,7 +1152,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
           </aside>
         </div>
       </details>
-      <details class="case" data-num="18">
+      <details class="case" data-num="18" data-areas="facilities">
         <summary>
           <span class="case-num">18</span>
           <span>
@@ -1436,6 +1461,46 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
     if(e.target === lupa || e.target.classList.contains('fechar')) fechar();
   });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fechar(); });
+})();
+</script>
+
+<script>
+(function(){
+  var aviso  = document.getElementById('filtroAviso');
+  var nome   = document.getElementById('filtroNome');
+  var limpar = document.getElementById('filtroLimpar');
+  var chips  = document.querySelectorAll('button.chip[data-area]');
+  var casos  = document.querySelectorAll('.case');
+  var blocos = document.querySelectorAll('.setor');
+
+  function aplicar(area, rotulo){
+    casos.forEach(function(c){
+      var lista = (c.dataset.areas || '').split(' ');
+      var bate  = !area || lista.indexOf(area) !== -1;
+      c.hidden = !bate;
+      if(!bate) c.open = false;
+    });
+    blocos.forEach(function(b){
+      var visiveis = b.querySelectorAll('.case:not([hidden])').length;
+      b.hidden = visiveis === 0;
+    });
+    chips.forEach(function(ch){
+      ch.setAttribute('aria-pressed', String(ch.dataset.area === area));
+    });
+    if(area){ nome.textContent = rotulo; aviso.classList.add('on'); }
+    else { aviso.classList.remove('on'); }
+  }
+
+  chips.forEach(function(ch){
+    ch.setAttribute('aria-pressed','false');
+    ch.addEventListener('click', function(){
+      var ativo = ch.getAttribute('aria-pressed') === 'true';
+      var rot = ch.childNodes[0].textContent.trim();
+      aplicar(ativo ? null : ch.dataset.area, rot);
+      document.getElementById('projetos').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  limpar.addEventListener('click', function(){ aplicar(null); });
 })();
 </script>
 
