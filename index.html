@@ -217,6 +217,19 @@ section.alt .aside-box{ background:var(--navy); }
   font-family:var(--mono); font-size:11.5px; color:var(--gold); line-height:1.65; }
 @media (max-width:860px){ .case-body{ grid-template-columns:1fr; gap:26px; } }
 
+/* alcance: áreas e setores */
+.alcance{ border-bottom:1px solid var(--line); background:var(--navy-2); padding:30px 0 34px; }
+.alcance-bloco{ margin-top:22px; }
+.alcance-bloco:first-child{ margin-top:0; }
+.alcance h3{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--azure); margin:0 0 4px; font-weight:500; }
+.alcance p{ margin:0 0 12px; font-size:14.5px; color:var(--text-soft); max-width:70ch; }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{ font-family:var(--mono); font-size:11.5px; padding:7px 12px;
+  border:1px solid var(--line-2); color:var(--text-read); background:var(--navy);
+  transition:border-color .2s, color .2s; }
+.chip:hover{ border-color:var(--azure); color:var(--azure-2); }
+
 /* painéis */
 .pgrupo{ margin:30px 0 12px; }
 .plabel{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
@@ -342,6 +355,42 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <div class="kpi"><b>4 TB</b><span>Acervo documental migrado</span></div>
         <div class="kpi up"><b>+552 mil<i class="arrow" aria-hidden="true"></i></b><span>Mensagens no canal digital<em>em crescimento</em></span></div>
         <div class="kpi"><b>+30 mil</b><span>Colaboradores no alcance</span></div>
+  </div>
+</div>
+
+<div class="alcance">
+  <div class="wrap">
+    <div class="alcance-bloco">
+      <h3>Áreas da empresa atendidas</h3>
+      <p>Os projetos que conduzi atravessaram praticamente toda a estrutura da organização, do fiscal ao jurídico.</p>
+      <div class="chips">
+        <span class="chip">Fiscal e tributário</span>
+        <span class="chip">Financeiro e tesouraria</span>
+        <span class="chip">RH e admissão</span>
+        <span class="chip">Operações e campo</span>
+        <span class="chip">Jurídico</span>
+        <span class="chip">Facilities e manutenção</span>
+        <span class="chip">Frotas e equipamentos</span>
+        <span class="chip">Comunicação interna</span>
+        <span class="chip">Atendimento e relacionamento</span>
+        <span class="chip">Dados e BI</span>
+        <span class="chip">Viagens e mobilidade</span>
+      </div>
+    </div>
+    <div class="alcance-bloco">
+      <h3>Setores dos clientes implantados</h3>
+      <p>Entre os clientes onde implantei sistema, a variedade de contexto vai do chão de fábrica ao ambiente hospitalar.</p>
+      <div class="chips">
+        <span class="chip">Indústria e manufatura</span>
+        <span class="chip">Educação</span>
+        <span class="chip">Saúde e hospitalar</span>
+        <span class="chip">Logística e transporte</span>
+        <span class="chip">Varejo e shopping</span>
+        <span class="chip">Condomínios</span>
+        <span class="chip">Automotivo</span>
+        <span class="chip">Serviços corporativos</span>
+      </div>
+    </div>
   </div>
 </div>
 </div>
