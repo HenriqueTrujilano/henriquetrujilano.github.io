@@ -71,6 +71,7 @@
 :root{
   --navy:#0A1628; --navy-2:#101E33; --navy-3:#17293F; --panel:#14263C;
   --line:#23364F; --line-2:#2C4260;
+  --linha-a:#0E1B2E; --linha-b:#15263D; --linha-hover:#1D3552;
   --text:#EDF2F8; --text-read:#D6DEE9; --text-soft:#B7C3D2; --text-dim:#9AA9BC;
   --azure:#4EA8DE; --azure-2:#7CC6F2; --azure-deep:#0D2A44;
   --gold:#D9A441;
@@ -180,15 +181,22 @@ section.alt .aside-box{ background:var(--navy); }
 
 .ledger{ border-left:1px solid var(--line); border-right:1px solid var(--line);
   border-bottom:1px solid var(--line); background:var(--navy-2); }
-.case{ border-bottom:1px solid var(--line); transition:background .2s; }
+.case{ border-bottom:1px solid var(--line); transition:background .2s, border-color .2s;
+  border-left:3px solid transparent; }
 .case:last-child{ border-bottom:0; }
-.case:hover{ background:var(--navy-3); }
-.case[open]{ background:var(--navy-3); }
+.case.linha-a{ background:var(--linha-a); }
+.case.linha-b{ background:var(--linha-b); }
+.case:hover, .case[open]{ background:var(--linha-hover); border-left-color:var(--azure); }
+.case.destaque{ border-left-color:rgba(78,168,222,.45); }
+.case.destaque:hover, .case.destaque[open]{ border-left-color:var(--azure); }
+/* número do caso em selo */
+.case-num{ display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:24px; border:1px solid var(--line-2); background:rgba(10,22,40,.55); }
 .case > summary{ display:grid; grid-template-columns:40px 1fr 26px; align-items:center;
   gap:16px; padding:20px 14px; cursor:pointer; list-style:none; }
 .case > summary::-webkit-details-marker{ display:none; }
 .case > summary:focus-visible{ outline:2px solid var(--azure); outline-offset:-2px; }
-.case-num{ font-family:var(--mono); font-size:12px; color:var(--gold); }
+.case-num{ font-family:var(--mono); font-size:11.5px; color:var(--gold); }
 .case-name{ font-family:var(--display); font-weight:700; font-size:18px;
   letter-spacing:-.015em; color:var(--text); }
 .case-plat{ display:block; font-family:var(--mono); font-size:11.5px; color:var(--text-soft); margin-top:4px; }
@@ -249,6 +257,33 @@ button.chip[aria-pressed="true"] em{ color:#06101C; }
   color:var(--text-read); padding:7px 12px; cursor:pointer; transition:.2s; }
 .filtro-aviso button:hover{ border-color:var(--azure); color:var(--azure-2); }
 .setor[hidden], .case[hidden]{ display:none; }
+
+/* ícones */
+.ic{ width:16px; height:16px; flex:none; vertical-align:-3px; }
+.btn{ display:inline-flex; align-items:center; gap:9px; }
+.label{ display:inline-flex; align-items:center; gap:9px; }
+.label .ic{ width:15px; height:15px; color:var(--azure); }
+.contact a.mail{ display:inline-flex; align-items:center; gap:14px; }
+.contact a.mail .ic{ width:26px; height:26px; color:var(--azure); }
+
+/* número fantasma atrás do título da seção */
+.sec-head{ position:relative; }
+.ghost{ position:absolute; right:0; top:-26px; font-family:var(--display); font-weight:800;
+  font-size:110px; line-height:1; letter-spacing:-.04em; color:var(--text);
+  opacity:.045; pointer-events:none; user-select:none; }
+@media (max-width:700px){ .ghost{ font-size:72px; top:-14px; } }
+
+/* ritmo: faixa de acento no topo de cada seção */
+section{ position:relative; }
+section > .wrap{ position:relative; z-index:1; }
+section.alt::before, #projetos::before{ content:''; position:absolute; left:0; right:0; top:0;
+  height:1px; background:linear-gradient(90deg, var(--azure) 0%, transparent 42%); }
+
+/* cabeçalho de setor com ícone */
+.setor-titulo{ display:flex; align-items:flex-start; gap:12px; }
+.setor-ic{ flex:none; margin-top:1px; color:var(--azure); }
+.setor-ic .ic{ width:21px; height:21px; }
+.setor-titulo > div, .setor-titulo h3{ margin:0; }
 
 /* painéis */
 .pgrupo{ margin:30px 0 12px; }
@@ -355,11 +390,11 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
      pegar de verdade.
    </p>
    <div class="cta-row">
-     <a class="btn solid" href="#projetos">Ver os projetos</a>
-     <a class="btn" href="https://wa.me/5511942390637?text=Ol%C3%A1%20Henrique%2C%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">WhatsApp</a>
-     <a class="btn" href="mailto:henrique.trujilano@outlook.com">E-mail</a>
-     <a class="btn" href="https://www.linkedin.com/in/henrique-trujilano" target="_blank" rel="noopener">LinkedIn</a>
-     <a class="btn" href="cv-henrique-trujilano.pdf" download>Currículo (PDF)</a>
+     <a class="btn solid" href="#projetos"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z"/><path d="M3 7V5h6l2 2"/></svg>Ver os projetos</a>
+     <a class="btn" href="https://wa.me/5511942390637?text=Ol%C3%A1%20Henrique%2C%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.8 9.2c.3 2.6 2.4 4.7 5 5l1-1.4 1.9.9c-.3 1-1.3 1.6-2.4 1.4-2.9-.5-5.4-3-5.9-5.9-.2-1.1.4-2.1 1.4-2.4z"/></svg>WhatsApp</a>
+     <a class="btn" href="mailto:henrique.trujilano@outlook.com"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>E-mail</a>
+     <a class="btn" href="https://www.linkedin.com/in/henrique-trujilano" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7"/><circle cx="7.5" cy="7.2" r="1"/><path d="M11.5 17v-4a2.5 2.5 0 0 1 5 0v4"/><path d="M11.5 10v7"/></svg>LinkedIn</a>
+     <a class="btn" href="cv-henrique-trujilano.pdf" download><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"/><path d="M8.5 10.5 12 14l3.5-3.5"/><path d="M4 17v2.5h16V17"/></svg>Currículo (PDF)</a>
    </div>
   </div>
   <div class="hero-portrait">
@@ -418,7 +453,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="projetos">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">01 · Inventário</div>
+      <span class="ghost">01</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z"/><path d="M3 7V5h6l2 2"/></svg>01 · Inventário</div>
       <h2>Projetos e implantações</h2>
       <p>Vinte e dois sistemas que entraram em produção, organizados por frente. Os marcados como destaque são os de maior escala ou complexidade. Abra qualquer um para ver o desafio, minha atuação e o que ficou de resultado.</p>
     </div>
@@ -439,7 +475,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="campo">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6.5-6 6.5-10.5a6.5 6.5 0 1 0-13 0C5.5 15 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg></span>
           <h3>Operação e Campo</h3>
           <p>Plataformas que colocam a operação de segurança e facilities sob controle, do posto ao parque de equipamentos.</p>
         </div>
@@ -597,7 +634,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
         <summary>
           <span class="case-num">05</span>
           <span>
-            <span class="case-name">Torre de Controle Operacional (CPCO)<span class="flag">Destaque</span></span>
+            <span class="case-name">Torre de Controle Operacional<span class="flag">Destaque</span></span>
             <span class="case-plat">Redesenho de processos · regras in-house · tempo real</span>
           </span>
           <span class="chev" aria-hidden="true"></span>
@@ -611,7 +648,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
             <h4>Entregas</h4>
             <ul>
               <li><b>Contingência automatizada:</b> regras que identificam a falta na hora e sugerem a cobertura por geolocalização, perfil e escala.</li>
-              <li><b>Time operacional virou analítico:</b> com menos apontamento manual, o CPCO passou a olhar SLA, absenteísmo e turnover.</li>
+              <li><b>Time operacional virou analítico:</b> com menos apontamento manual, o  passou a olhar SLA, absenteísmo e turnover.</li>
               <li><b>Painel de presença em tempo real:</b> menos postos descobertos e mais aderência aos contratos de prestação de serviço.</li>
               <li><b>Menos hora extra:</b> substituições mais eficientes e melhor uso do banco de reservas.</li>
             </ul>
@@ -694,7 +731,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="erp">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><rect x="3" y="12" width="18" height="8" rx="1"/><path d="M7 6.5h.01M7 15.5h.01"/></svg></span>
           <h3>ERP, Fiscal e Financeiro</h3>
           <p>Implantação e parametrização dos módulos que sustentam tesouraria, conciliação e apuração tributária.</p>
         </div>
@@ -769,7 +807,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="dados">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg></span>
           <h3>Dados, BI e Documentos</h3>
           <p>Arquitetura analítica para decisão e governança do acervo documental da empresa.</p>
         </div>
@@ -845,7 +884,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="atendimento">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 0-3 6.2V21l3.3-1.6A8 8 0 0 0 20 12z"/><path d="M9 11h6M9 14h4"/></svg></span>
           <h3>Atendimento Digital</h3>
           <p>Dois canais com papéis opostos: um que recebe e resolve, outro que dispara e mede.</p>
         </div>
@@ -923,7 +963,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="pessoas">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16.5 6.2a3 3 0 0 1 0 5.6"/><path d="M17.5 14.4A5.5 5.5 0 0 1 20.5 19"/></svg></span>
           <h3>Pessoas, Produto e Comunicação</h3>
           <p>Produtos voltados ao colaborador e ao candidato, de recrutamento com IA a comunicação interna.</p>
         </div>
@@ -1095,7 +1136,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 
     <section class="setor" id="corporativo">
       <header class="setor-head">
-        <div>
+        <div class="setor-titulo">
+          <span class="setor-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M4 13h16"/></svg></span>
           <h3>Serviços Corporativos</h3>
           <p>Rotinas administrativas que saíram do informal e passaram a ter registro, prazo e indicador.</p>
         </div>
@@ -1236,7 +1278,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="paineis" class="alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">02 · Painéis</div>
+      <span class="ghost">02</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M7 15v-3M11 15v-6M15 15v-4M19 15v-2"/></svg>02 · Painéis</div>
       <h2>Indicadores em produção</h2>
       <p>Painéis que construí e mantive, usados na rotina de decisão da operação e da diretoria. Dados de clientes, fornecedores, colaboradores e valores foram removidos ou substituídos por informação ilustrativa. Clique para ampliar.</p>
     </div>
@@ -1310,7 +1353,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="competencias" class="alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">03 · Repertório</div>
+      <span class="ghost">03</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>03 · Repertório</div>
       <h2>Como eu trabalho</h2>
       <p>Sei conduzir a conversa e sei o que acontece por dentro do sistema. É a combinação que faz projeto sair do papel e continuar de pé.</p>
     </div>
@@ -1355,7 +1399,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="trajetoria">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">04 · Trajetória</div>
+      <span class="ghost">04</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V9M12 20V4M19 20v-7"/><circle cx="5" cy="7" r="1.6"/><circle cx="12" cy="2.6" r="1.6"/><circle cx="19" cy="11" r="1.6"/></svg>04 · Trajetória</div>
       <h2>Trajetória</h2>
       <p>Da operação para a gestão de projetos, passando por uma base técnica que hoje uso para conversar com engenharia sem intermediário.</p>
     </div>
@@ -1415,7 +1460,8 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="sobre" class="alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">05 · Sobre</div>
+      <span class="ghost">05</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>05 · Sobre</div>
       <h2>Quem está por trás dos projetos</h2>
     </div>
     <div class="about">
@@ -1461,15 +1507,16 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
 <section id="contato" class="contact">
   <div class="wrap">
     <div class="sec-head">
-      <div class="label">06 · Contato</div>
+      <span class="ghost">06</span>
+      <div class="label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.5v2.2a1.8 1.8 0 0 1-2 1.8A16.5 16.5 0 0 1 3.5 5a1.8 1.8 0 0 1 1.8-2h2.2a1.8 1.8 0 0 1 1.8 1.5l.5 2.6a1.8 1.8 0 0 1-.5 1.6l-1 1a13 13 0 0 0 5 5l1-1a1.8 1.8 0 0 1 1.6-.5l2.6.5A1.8 1.8 0 0 1 21 16.5z"/></svg>06 · Contato</div>
       <h2>Vamos conversar</h2>
       <p>Se algum desses projetos parece com o desafio que você tem hoje, me chama.</p>
     </div>
-    <a class="mail" href="mailto:henrique.trujilano@outlook.com">henrique.trujilano@outlook.com</a>
+    <a class="mail" href="mailto:henrique.trujilano@outlook.com"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>henrique.trujilano@outlook.com</a>
     <div class="cta-row">
-      <a class="btn" href="https://wa.me/5511942390637?text=Ol%C3%A1%20Henrique%2C%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener">WhatsApp</a>
-      <a class="btn" href="https://www.linkedin.com/in/henrique-trujilano" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="cv-henrique-trujilano.pdf" download>Currículo (PDF)</a>
+      <a class="btn" href="https://wa.me/5511942390637?text=Ol%C3%A1%20Henrique%2C%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.7-4.8A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.8 9.2c.3 2.6 2.4 4.7 5 5l1-1.4 1.9.9c-.3 1-1.3 1.6-2.4 1.4-2.9-.5-5.4-3-5.9-5.9-.2-1.1.4-2.1 1.4-2.4z"/></svg>WhatsApp</a>
+      <a class="btn" href="https://www.linkedin.com/in/henrique-trujilano" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7"/><circle cx="7.5" cy="7.2" r="1"/><path d="M11.5 17v-4a2.5 2.5 0 0 1 5 0v4"/><path d="M11.5 10v7"/></svg>LinkedIn</a>
+      <a class="btn" href="cv-henrique-trujilano.pdf" download><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"/><path d="M8.5 10.5 12 14l3.5-3.5"/><path d="M4 17v2.5h16V17"/></svg>Currículo (PDF)</a>
     </div>
   </div>
 </section>
@@ -1517,6 +1564,18 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
   var casos  = document.querySelectorAll('.case');
   var blocos = document.querySelectorAll('.setor');
 
+  function zebrar(){
+    blocos.forEach(function(b){
+      var i = 0;
+      b.querySelectorAll('.case').forEach(function(c){
+        c.classList.remove('linha-a','linha-b');
+        if(c.hidden) return;
+        c.classList.add(i % 2 === 0 ? 'linha-a' : 'linha-b');
+        i++;
+      });
+    });
+  }
+
   function aplicar(area, rotulo){
     casos.forEach(function(c){
       var lista = (c.dataset.areas || '').split(' ');
@@ -1528,6 +1587,7 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
       var visiveis = b.querySelectorAll('.case:not([hidden])').length;
       b.hidden = visiveis === 0;
     });
+    zebrar();
     chips.forEach(function(ch){
       ch.setAttribute('aria-pressed', String(ch.dataset.area === area));
     });
@@ -1541,10 +1601,44 @@ footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:1
       var ativo = ch.getAttribute('aria-pressed') === 'true';
       var rot = ch.childNodes[0].textContent.trim();
       aplicar(ativo ? null : ch.dataset.area, rot);
-      document.getElementById('projetos').scrollIntoView({behavior:'smooth', block:'start'});
+      if(window.__irPara) window.__irPara(document.getElementById('projetos'));
     });
   });
   limpar.addEventListener('click', function(){ aplicar(null); });
+  zebrar();
+})();
+</script>
+
+<script>
+(function(){
+  // rolagem precisa: corrige o alvo depois que o layout estabiliza
+  function irPara(alvo){
+    if(!alvo) return;
+    var topo = function(){
+      return alvo.getBoundingClientRect().top + window.pageYOffset - 72;
+    };
+    window.scrollTo({ top: topo(), behavior: 'smooth' });
+    var tentativas = 0;
+    var corrigir = setInterval(function(){
+      var alvoY = topo();
+      if(Math.abs(window.pageYOffset - alvoY) > 4 && tentativas < 6){
+        window.scrollTo({ top: alvoY, behavior: 'smooth' });
+      } else {
+        clearInterval(corrigir);
+      }
+      tentativas++;
+    }, 260);
+  }
+  document.querySelectorAll('.indice a, header.top nav a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id && id.charAt(0) === '#'){
+        var alvo = document.querySelector(id);
+        if(alvo){ e.preventDefault(); irPara(alvo); history.replaceState(null,'',id); }
+      }
+    });
+  });
+  window.__irPara = irPara;
 })();
 </script>
 
